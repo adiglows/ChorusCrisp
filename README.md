@@ -2,10 +2,12 @@
 
 A Vegas Pro script for creating punchy, layered vocal chop effects commonly used in Sparta Remixes.
 
+![Chorus Crisp Dialog](images/dialog.png)
+
 ## What It Does
 
 Chorus Crisp automates a technique where each audio clip is:
-1. **Split** at a tiny offset (20-47ms from the start)
+1. **Split** at a tiny offset (20-60ms from the start)
 2. **Overlapped** - the second clip is extended backwards to layer with the first
 3. **Crossfaded** - smooth transition between the overlapping sections
 4. **Ducked** - the second clip's volume is reduced to let the attack punch through
@@ -39,19 +41,40 @@ Notice how each clip now has an overlapping section with crossfades, and the sec
 
 1. **Select** the audio clips you want to process on the timeline
 2. Go to **Tools → Scripting → ChorusCrisp**
-3. Adjust the parameters in the dialog:
-   - **Splice Position**: Where to cut each clip (0.020s - 0.047s)
-   - **Volume Duck**: How much to reduce the second clip's volume (-1 to -17 dB)
-   - **Crossfade Curve**: The easing type for the crossfade (Linear, Fast, Slow, Sharp, Smooth)
+3. Choose a **Preset** or adjust the parameters manually:
+   - **Splice Position**: Where to cut each clip (20ms - 60ms)
+   - **Volume Duck**: How much to reduce the second clip's volume (0 to -15 dB)
+   - **Offset**: How much the second clip overlaps with the first (0% - 100%)
+   - **Crossfade Curve**: The easing type for the crossfade
 4. Click **Apply Crisp**
+
+## Presets
+
+| Preset | Splice Position | Volume Duck | Offset | Crossfade Curve |
+|--------|-----------------|-------------|--------|-----------------|
+| **Jario Style** | 50% | -3.0 dB | 80% | Smooth |
+| **Standard** | 40% | -3.0 dB | 90% | Linear |
+| **Snappy** | 35% | -5.0 dB | 95% | Fast |
+
+Select a preset from the dropdown to instantly apply these settings. If you adjust the sliders manually, the preset will automatically switch to "Custom".
 
 ## Parameters
 
-| Parameter | Range | Default | Description |
-|-----------|-------|---------|-------------|
-| Splice Position | 0.020s - 0.047s | 0.034s | How far into each clip to make the cut. Smaller = tighter attack. |
-| Volume Duck | -1 dB to -17 dB | -1.0 dB | How much quieter the second clip should be. More negative = more ducking. |
-| Crossfade Curve | Linear, Fast, Slow, Sharp, Smooth | Linear | The shape of the crossfade between clips. |
+| Parameter | Range | Description |
+|-----------|-------|-------------|
+| Splice Position | 0% - 100% (20ms - 60ms) | How far into each clip to make the cut. Lower = tighter attack. |
+| Volume Duck | 0 dB to -15 dB | How much quieter the second clip should be. More negative = more ducking. |
+| Offset | 0% - 100% | How much the second clip overlaps. Higher = more overlap and layering. |
+| Crossfade Curve | Linear, Fast, Slow, Sharp, Smooth | The shape of the crossfade between clips. |
+
+## Saved Settings
+
+Your settings are automatically saved when you click **Apply Crisp** and restored the next time you open the script. Settings persist even after closing Vegas Pro.
+
+Settings are stored in:
+```
+%AppData%\ChorusCrisp\settings.txt
+```
 
 ## How It Works
 
@@ -64,6 +87,18 @@ For each selected audio event, the script:
 
 All operations are wrapped in an `UndoBlock` so you can Ctrl+Z the entire batch.
 
+## Compatibility
+
+- ✅ Vegas Pro 14
+- ✅ Vegas Pro 22
+- ✅ Vegas Pro 23
+
+Uses `ScriptPortal.Vegas` namespace (Vegas Pro 14+).
+
 ## License
 
 Free to use and modify. Credit appreciated but not required.
+
+## Credits
+
+Created for the Sparta Remix community.
